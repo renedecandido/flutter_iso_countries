@@ -50,9 +50,10 @@ class CountryDataStore private constructor() {
       countriesList.clear()
       for (countryCode in Locale.getISOCountries()) {
         val locale = Locale(localeIdentifer,countryCode)
-        var countryName: String? = locale.getDisplayCountry(Locale.forLanguageTag(localeIdentifer))
-        if (countryName == null) {
-          countryName = "UnIdentified"
+        var countryName = locale.getDisplayCountry(Locale(locale.isO3Language))
+
+        if (countryName.isNullOrEmpty()) {
+          countryName = locale.displayCountry
         }
         val simpleCountry = hashMapOf("name" to countryName, "countryCode" to countryCode)
         countriesList.add(simpleCountry)
